@@ -5,7 +5,9 @@ import useSWR from "swr";
 import WeatherConditions from "./WeatherConditions";
 
 const WeatherBlock: React.FC<{}> = () => {
-  const { data, error } = useSWR("/api/fetchWeather");
+  const { data, error } = useSWR("/api/fetchWeather", {
+    refreshInterval: 60000,
+  });
 
   if (error) return <div>Failed to retrieve weather info</div>;
   console.log(data);
@@ -14,10 +16,14 @@ const WeatherBlock: React.FC<{}> = () => {
       {!data ? (
         <p>Loading</p>
       ) : (
-        <>
-          <WeatherConditions conditions={data.current.weather[0]} />
-          <p className="text-6xl font-sans">Currently {Math.ceil(data.current.temp)} <sup className="text-2xl">°C</sup></p>
-        </>
+        <div className="flex flex-wrap overflow-hidden">
+          <div className="w-full overflow-hidden">
+            <WeatherConditions current={data.current} conditions={data.current.weather[0]} />
+          </div>
+          <div className="w-full overflow-hidden bg-red-300">
+            Full
+          </div>
+        </div>
       )}
     </>
   );

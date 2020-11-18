@@ -8,6 +8,9 @@ module.exports = {
     extend: {
       fontFamily: {
         'sans': ['Noto Sans', 'sans-serif'],
+      },
+      backgroundColor: {
+        'background': '#f6f6f8'
       }
     },
   },

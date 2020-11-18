@@ -6,7 +6,7 @@ import WeatherBlock from "@components/WeatherBlock";
 
 function Index({ Component, pageProps }: AppProps) {
   return (
-    <div className="flex h-screen bg-gray-200">
+    <div className="flex h-screen bg-background">
       <div className="flex-grow w-1/2">
         <div className="flex flex-col h-full">
           <Tile>
