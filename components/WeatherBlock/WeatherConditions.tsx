@@ -33,7 +33,7 @@ interface WeatherConditionsProps {
   };
 }
 
-const getIcon: any = (conditionCode: string) => {
+export const getIcon: any = (conditionCode: string) => {
   switch (conditionCode) {
     case "01d":
       return <WiDaySunny />;
@@ -89,7 +89,7 @@ const WeatherConditions: React.FC<WeatherConditionsProps> = ({
         <strong className="leading-none text-6xl block font-bold">
           {Math.ceil(current.temp)}ºC
         </strong>
-        <b className="text-2xl block font-bold mt-4">{conditions.main}</b>
+        <p className="text-2xl block mt-4">{conditions.main}</p>
       </div>
     </div>
   );

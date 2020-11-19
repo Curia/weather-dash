@@ -1,3 +1,16 @@
+export const getWeekDay = (day: number) => {
+    const weekday: Array<string> = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      return weekday[day];
+}
+
 const DateTime: React.FC = ({}) => {
   const today: Date = new Date();
   const weekday: Array<string> = [
@@ -18,8 +31,8 @@ const DateTime: React.FC = ({}) => {
       <p className="text-6xl leading-none block font-bold">
           {hours}:{minutes} {ampm}
         </p>
-        <p className="text-2xl leading-none block font-bold mt-4">
-          {weekday[today.getDay()]}
+        <p className="text-2xl leading-none block mt-4">
+          {getWeekDay(today.getDay())}
         </p>
       </div>
     </div>
