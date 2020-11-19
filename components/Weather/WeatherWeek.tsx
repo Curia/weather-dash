@@ -1,5 +1,4 @@
-import { getIcon } from "./WeatherConditions";
-import { getWeekDay } from "./DateTime";
+import {getWeekDay, getIcon} from "@components/utils";
 
 interface WeatherDayProps {
   dt: number;

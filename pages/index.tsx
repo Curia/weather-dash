@@ -1,25 +1,30 @@
 import type { AppProps } from "next/app";
+import useSWR from "swr";
 
 // Components
-import Tile from "@components/Tile";
-import WeatherBlock from "@components/WeatherBlock";
+import WeatherCurrent from "@components/Weather/WeatherCurrent";
 
 function Index({ Component, pageProps }: AppProps) {
-  return (
-    <div className="flex h-screen bg-background">
-      <div className="flex-grow w-1/2">
-        <div className="flex flex-col h-full">
-          <Tile>
-            <WeatherBlock />
-          </Tile>
+  const { data, error } = useSWR("/api/fetchWeather", {
+    refreshInterval: 60000,
+  });
 
-          <Tile>Contents here</Tile>
+  if (error) return <div>Unable to retrieve weather info</div>;
+  return (
+    <>
+      {!data ? (
+        <p>Loading</p>
+      ) : (
+        <div className="w-screen h-screen bg-background text-primary">
+          <div className="flex flex-col justify-between h-full">
+            <div>
+              <WeatherCurrent current={data.current} />
+            </div>
+            <div>graph here</div>
+          </div>
         </div>
-      </div>
-      <div className="flex-grow w-1/2">
-        <Tile>Contents</Tile>
-        </div>
-    </div>
+      )}
+    </>
   );
 }
 

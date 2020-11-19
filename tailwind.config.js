@@ -7,10 +7,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Noto Sans", "sans-serif"],
+        sans: ["Open Sans", "sans-serif"],
       },
       backgroundColor: {
-        background: "#f6f6f8",
+        background: "#f2f2f2",
+      },
+      textColor: {
+        'primary': '#333434',
       },
       fontSize: {
         "5xl": "3rem",

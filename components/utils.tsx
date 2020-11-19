@@ -1,5 +1,3 @@
-import React from "react";
-
 // Icons
 import {
   WiDaySunny,
@@ -18,22 +16,42 @@ import {
   WiNightAltSnow,
   WiDayFog,
   WiNightFog,
-  WiAlien
+  WiAlien,
 } from "react-icons/wi";
 
-interface WeatherConditionsProps {
-  current: {
-    temp: number;
-  };
-  conditions: {
-    id: boolean;
-    main: string;
-    description: string;
-    icon: string;
-  };
-}
+export const getWeekDay = (day: number) => {
+  const weekday: Array<string> = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return weekday[day];
+};
 
-export const getIcon: any = (conditionCode: string) => {
+// https://stackoverflow.com/a/39466341/10925497
+const ordinal = (n: number) =>
+  [, "st", "nd", "rd"][(n % 100 >> 3) ^ 1 && n % 10] || "th";
+
+export const getDateTime = () => {
+  const today: Date = new Date();
+  const hours: number = today.getHours() % 12;
+  const minutes: string | number =
+    today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
+  const ampm = today.getHours() >= 12 ? "pm" : "am";
+
+  return {
+    time: `${hours}:${minutes} ${ampm}`,
+    day: `${getWeekDay(today.getDay())} the ${today.getDate()}${ordinal(
+      today.getDate()
+    )}`,
+  };
+};
+
+export const getIcon = (conditionCode: string) => {
   switch (conditionCode) {
     case "01d":
       return <WiDaySunny />;
@@ -75,24 +93,3 @@ export const getIcon: any = (conditionCode: string) => {
       return <WiAlien />;
   }
 };
-
-const WeatherConditions: React.FC<WeatherConditionsProps> = ({
-  current,
-  conditions,
-}) => {
-  return (
-    <div className="flex flex-wrap items-center">
-      <div className="flex-initial">
-        <span className="text-9xl">{getIcon(conditions.icon)}</span>
-        </div>
-      <div className="flex-initial">
-        <strong className="leading-none text-6xl block font-bold">
-          {Math.ceil(current.temp)}ºC
-        </strong>
-        <p className="text-2xl block mt-4">{conditions.main}</p>
-      </div>
-    </div>
-  );
-};
-
-export default WeatherConditions;
