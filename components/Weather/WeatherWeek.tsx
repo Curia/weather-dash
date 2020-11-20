@@ -1,4 +1,7 @@
-import {getWeekDay, getIcon} from "@components/utils";
+import React, { PureComponent } from "react";
+import { AreaChart, Area, ResponsiveContainer, LabelList } from "recharts";
+
+import { getWeekDay, getIcon } from "@components/utils";
 
 interface WeatherDayProps {
   dt: number;
@@ -10,25 +13,34 @@ interface WeatherWeekProps {
   daily: Array<WeatherDayProps>;
 }
 
-const WeatherDay = ({ day }) => {
-  const currentDay: Date = new Date(day.dt * 1000);
-  return (
-    <div className="block flex-1 flex flex-col items-center">
-      <p className="text-4xl">{getIcon(day.weather[0].icon)}</p>
-      <p>
-        {Math.ceil(day.temp.min)}/{Math.ceil(day.temp.max)}
-      </p>
-      <p className="text-xl">{getWeekDay(currentDay.getDay()).slice(0, 3)}</p>
-    </div>
+interface DataInterface {
+  dt: number;
+  max: number;
+  min: number;
+}
+
+const weeklyData = (daily) => {
+  const data: Array<DataInterface> = [];
+  daily.map((day) =>
+    data.push({ dt: day.dt, max: day.temp.max, min: day.temp.min })
   );
+  return data;
 };
 
 const WeatherWeek: React.FC<WeatherWeekProps> = ({ daily }) => {
+  const data: Array<DataInterface> = weeklyData(daily);
   return (
-    <div className="flex flex-wrap items-center">
-      {daily.map((day) => (
-        <WeatherDay day={day} />
-      ))}
+    <div className="w-full h-full flex items-end">
+      <ResponsiveContainer width="100%" height="80%">
+        <AreaChart data={data} margin={{ left: 0, bottom: 0 }}>
+          <Area type="monotone" dataKey="max" stroke="#fcb404" fill="#fccd62">
+            <LabelList dataKey="max" position="right" />
+          </Area>
+          <Area type="monotone" dataKey="min" stroke="#fcb404" fill="#fccd62">
+          <LabelList dataKey="min" position="right" />
+          </Area>
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   );
 };

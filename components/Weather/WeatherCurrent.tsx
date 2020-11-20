@@ -22,7 +22,7 @@ const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
     <div className="w-full p-4">
       <div className="flex justify-end">
         <div className="w-1/2">
-          <p className="leading-none text-9xl">{dateTime.time}</p>
+  <p className="leading-none text-9xl">{dateTime.time}<span className="text-6xl">{dateTime.period}</span></p>
           <p className="leading-none text-4xl mt-4">{dateTime.day.toLowerCase()}</p>
         </div>
         <div className="w-1/2 text-right">

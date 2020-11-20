@@ -42,9 +42,9 @@ export const getDateTime = () => {
   const minutes: string | number =
     today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
   const ampm = today.getHours() >= 12 ? "pm" : "am";
-
   return {
-    time: `${hours}:${minutes} ${ampm}`,
+    time: `${hours ? hours : 12}:${minutes}`,
+    period: ampm,
     day: `${getWeekDay(today.getDay())} the ${today.getDate()}${ordinal(
       today.getDate()
     )}`,

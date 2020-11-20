@@ -3,6 +3,7 @@ import useSWR from "swr";
 
 // Components
 import WeatherCurrent from "@components/Weather/WeatherCurrent";
+import WeatherWeek from "@components/Weather/WeatherWeek";
 
 function Index({ Component, pageProps }: AppProps) {
   const { data, error } = useSWR("/api/fetchWeather", {
@@ -20,7 +21,7 @@ function Index({ Component, pageProps }: AppProps) {
             <div>
               <WeatherCurrent current={data.current} />
             </div>
-            <div>graph here</div>
+            <WeatherWeek daily={data.daily}/>
           </div>
         </div>
       )}
