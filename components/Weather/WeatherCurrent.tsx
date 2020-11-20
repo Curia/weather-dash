@@ -22,12 +22,24 @@ const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
     <div className="w-full p-4">
       <div className="flex justify-end">
         <div className="w-1/2">
-  <p className="leading-none text-9xl">{dateTime.time}<span className="text-6xl">{dateTime.period}</span></p>
-          <p className="leading-none text-4xl mt-4">{dateTime.day.toLowerCase()}</p>
+          <p className="leading-none text-9xl">
+            {dateTime.time}
+            <span className="text-6xl">{dateTime.period}</span>
+          </p>
+          <p className="leading-none text-4xl mt-4">
+            {dateTime.day.toLowerCase()}
+          </p>
         </div>
         <div className="w-1/2 text-right">
-          <p className="leading-none text-9xl">{Math.ceil(current.temp)}</p>
-          <p className="leading-none text-4xl mt-4">{weather.description.toLowerCase()}</p>
+          <p className="leading-none text-9xl">
+            <span className="text-6xl">
+              {getIcon(current.weather[0].icon, true)}
+            </span>
+            {Math.ceil(current.temp)}
+          </p>
+          <p className="leading-none text-4xl mt-4">
+            {weather.description.toLowerCase()}
+          </p>
         </div>
       </div>
     </div>

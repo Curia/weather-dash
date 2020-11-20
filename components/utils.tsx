@@ -51,45 +51,45 @@ export const getDateTime = () => {
   };
 };
 
-export const getIcon = (conditionCode: string) => {
+export const getIcon = (conditionCode: string, inline: boolean) => {
   switch (conditionCode) {
     case "01d":
-      return <WiDaySunny />;
+      return <WiDaySunny className={inline ? "inline" : null} />;
     case "01n":
-      return <WiNightClear />;
+      return <WiNightClear className={inline ? "inline" : null} />;
     case "02d":
-      return <WiDayCloudy />;
+      return <WiDayCloudy className={inline ? "inline" : null} />;
     case "02n":
-      return <WiNightAltCloudy />;
+      return <WiNightAltCloudy className={inline ? "inline" : null} />;
     case "03d":
-      return <WiCloud />;
+      return <WiCloud className={inline ? "inline" : null} />;
     case "03n":
-      return <WiCloud />;
+      return <WiCloud className={inline ? "inline" : null} />;
     case "04d":
-      return <WiCloudy />;
+      return <WiCloudy className={inline ? "inline" : null} />;
     case "04n":
-      return <WiCloudy />;
+      return <WiCloudy className={inline ? "inline" : null} />;
     case "09d":
-      return <WiDayShowers />;
+      return <WiDayShowers className={inline ? "inline" : null} />;
     case "09n":
-      return <WiNightAltShowers />;
+      return <WiNightAltShowers className={inline ? "inline" : null} />;
     case "10d":
-      return <WiDayRain />;
+      return <WiDayRain className={inline ? "inline" : null} />;
     case "10n":
-      return <WiNightAltRain />;
+      return <WiNightAltRain className={inline ? "inline" : null} />;
     case "11d":
-      return <WiDayThunderstorm />;
+      return <WiDayThunderstorm className={inline ? "inline" : null} />;
     case "11n":
-      return <WiNightAltThunderstorm />;
+      return <WiNightAltThunderstorm className={inline ? "inline" : null} />;
     case "13d":
-      return <WiDaySnow />;
+      return <WiDaySnow className={inline ? "inline" : null} />;
     case "13n":
-      return <WiNightAltSnow />;
+      return <WiNightAltSnow className={inline ? "inline" : null} />;
     case "50d":
-      return <WiDayFog />;
+      return <WiDayFog className={inline ? "inline" : null} />;
     case "50n":
-      return <WiNightFog />;
+      return <WiNightFog className={inline ? "inline" : null} />;
     default:
-      return <WiAlien />;
+      return <WiAlien className={inline ? "inline" : null} />;
   }
 };

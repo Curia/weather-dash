@@ -22,7 +22,11 @@ interface DataInterface {
 const weeklyData = (daily) => {
   const data: Array<DataInterface> = [];
   daily.map((day) =>
-    data.push({ dt: day.dt, max: day.temp.max, min: day.temp.min })
+    data.push({
+      dt: day.dt,
+      max: Math.ceil(day.temp.max),
+      min: Math.ceil(day.temp.min),
+    })
   );
   return data;
 };
@@ -37,7 +41,7 @@ const WeatherWeek: React.FC<WeatherWeekProps> = ({ daily }) => {
             <LabelList dataKey="max" position="right" />
           </Area>
           <Area type="monotone" dataKey="min" stroke="#fcb404" fill="#fccd62">
-          <LabelList dataKey="min" position="right" />
+            <LabelList dataKey="min" position="right" />
           </Area>
         </AreaChart>
       </ResponsiveContainer>
