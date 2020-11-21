@@ -17,7 +17,7 @@ interface CurrentConditionsProps {
 
 const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
   const weather: WeatherProps = current.weather[0];
-  const dateTime = getDateTime();
+  const dateTime = getDateTime(new Date().getTime() / 1000);
   return (
     <div className="w-full p-4">
       <div className="flex justify-end">
@@ -27,7 +27,7 @@ const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
             <span className="text-6xl">{dateTime.period}</span>
           </p>
           <p className="leading-none text-4xl mt-4">
-            {dateTime.day.toLowerCase()}
+            {dateTime.day}
           </p>
         </div>
         <div className="w-1/2 text-right">
@@ -38,7 +38,7 @@ const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
             {Math.ceil(current.temp)}
           </p>
           <p className="leading-none text-4xl mt-4">
-            {weather.description.toLowerCase()}
+            {weather.description[0].toUpperCase() + weather.description.slice(1)}
           </p>
         </div>
       </div>

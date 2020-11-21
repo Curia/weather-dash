@@ -36,8 +36,8 @@ export const getWeekDay = (day: number) => {
 const ordinal = (n: number) =>
   [, "st", "nd", "rd"][(n % 100 >> 3) ^ 1 && n % 10] || "th";
 
-export const getDateTime = () => {
-  const today: Date = new Date();
+export const getDateTime = (unixSeconds: number) => {
+  const today: Date = new Date(unixSeconds * 1000);
   const hours: number = today.getHours() % 12;
   const minutes: string | number =
     today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
