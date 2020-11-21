@@ -16,24 +16,37 @@ interface CurrentConditionsProps {
   };
 }
 
-const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
+const DateTime: React.FC<{}> = ({}) => {
   const { data, error } = useSWR("/api/fetchTime", {
     refreshInterval: 5000,
   });
-
-  const weather: WeatherProps = current.weather[0];
+  if (error) return <div>Unable to retrieve time info</div>;
   return (
-    <div className="w-full p-4">
-      <div className="flex justify-end">
-        <div className="w-1/2">
+    <>
+      {!data ? (
+        <p>Loading</p>
+      ) : (
+        <>
           <p className="leading-none text-9xl">
             {data.timeFormatted}
             <span className="text-6xl">{data.ampm}</span>
           </p>
           <p className="leading-none text-4xl mt-4">
             {`${data.day}  the ${data.date}${getOrdinal(data.date)}`}
-            
           </p>
+        </>
+      )}
+    </>
+  );
+};
+
+const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
+  const weather: WeatherProps = current.weather[0];
+  return (
+    <div className="w-full p-4">
+      <div className="flex justify-end">
+        <div className="w-1/2">
+          <DateTime />
         </div>
         <div className="w-1/2 text-right">
           <p className="leading-none text-9xl">
@@ -43,7 +56,8 @@ const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
             {Math.ceil(current.temp)}
           </p>
           <p className="leading-none text-4xl mt-4">
-            {weather.description[0].toUpperCase() + weather.description.slice(1)}
+            {weather.description[0].toUpperCase() +
+              weather.description.slice(1)}
           </p>
         </div>
       </div>
