@@ -1,23 +1,28 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import type { AppProps } from "next/app";
 import useSWR from "swr";
 
 // Components
 import WeatherCurrent from "@components/Weather/WeatherCurrent";
 import WeatherWeek from "@components/Weather/WeatherWeek";
+import { requestWakeLock, releaseWakeLock } from "@components/utils";
 
 // Icons
 import { BsArrowsAngleExpand, BsArrowsAngleContract } from "react-icons/bs";
 
 const FullScreen: React.FC<{}> = () => {
-  const [fullscreen, setFullscreen] = useState(false)
+  const [fullscreen, setFullscreen] = useState(false);
 
   const handleFullscreen = (event) => {
     event.preventDefault();
-    document.fullscreenElement
-      ? document.exitFullscreen()
-      : document.body.requestFullscreen();
-      setFullscreen(!fullscreen)
+    if (fullscreen) {
+      document.exitFullscreen();
+      releaseWakeLock();
+    } else {
+      document.body.requestFullscreen();
+      requestWakeLock();
+    }
+    setFullscreen(!fullscreen);
   };
 
   return (
@@ -25,11 +30,7 @@ const FullScreen: React.FC<{}> = () => {
       className="absolute bottom-0 right-0 bg-blue-400 rounded-full text-xl text-white m-4 p-2 block"
       onClick={(e: React.MouseEvent<HTMLInputElement>) => handleFullscreen(e)}
     >
-      {fullscreen ? (
-        <BsArrowsAngleContract />
-      ) : (
-        <BsArrowsAngleExpand />
-      )}
+      {fullscreen ? <BsArrowsAngleContract /> : <BsArrowsAngleExpand />}
     </button>
   );
 };

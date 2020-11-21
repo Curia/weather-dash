@@ -3,9 +3,3 @@
 @tailwind  components;
 /* purgecss end ignore */
 @tailwind  utilities;
-
-
-g.recharts-layer.recharts-label-list text:first-child,
-g.recharts-layer.recharts-label-list text:last-child {
-  display:none;
-}
