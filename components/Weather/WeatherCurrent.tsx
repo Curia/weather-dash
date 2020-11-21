@@ -1,5 +1,6 @@
 import React from "react";
-import { getIcon, getDateTime } from "@components/utils";
+import useSWR from "swr";
+import { getIcon, getOrdinal } from "@components/utils";
 
 interface WeatherProps {
   id: boolean;
@@ -16,18 +17,22 @@ interface CurrentConditionsProps {
 }
 
 const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
+  const { data, error } = useSWR("/api/fetchTime", {
+    refreshInterval: 5000,
+  });
+
   const weather: WeatherProps = current.weather[0];
-  const dateTime = getDateTime(new Date().getTime() / 1000);
   return (
     <div className="w-full p-4">
       <div className="flex justify-end">
         <div className="w-1/2">
           <p className="leading-none text-9xl">
-            {dateTime.time}
-            <span className="text-6xl">{dateTime.period}</span>
+            {data.timeFormatted}
+            <span className="text-6xl">{data.ampm}</span>
           </p>
           <p className="leading-none text-4xl mt-4">
-            {dateTime.day}
+            {`${data.day}  the ${data.date}${getOrdinal(data.date)}`}
+            
           </p>
         </div>
         <div className="w-1/2 text-right">

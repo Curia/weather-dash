@@ -7,7 +7,7 @@ import {
   XAxis,
 } from "recharts";
 
-import { getIcon, getDateTime } from "@components/utils";
+import { getIcon, getWeekDay } from "@components/utils";
 
 interface WeatherDayProps {
   dt: number;
@@ -31,7 +31,8 @@ interface DataInterface extends Array<DataInterfaceItem> {}
 const weeklyData = (daily) => {
   const data: DataInterface = [];
   daily.map((day) => {
-    const weekDay: string = getDateTime(day.dt).day.substr(0, 3);
+    const date = new Date(day.dt * 1000)
+    const weekDay: string = getWeekDay(date.getDay()).substr(0, 3);
 
     data.push({
       day: weekDay,
@@ -40,9 +41,6 @@ const weeklyData = (daily) => {
       icon: day.weather[0].icon,
     });
   });
-
-  // Add empty value to end to fix design
-  data[data.length - 1].day = "";
   return data;
 };
 
@@ -70,12 +68,31 @@ const WeatherGraph: React.FC<{ data: DataInterface }> = ({ data }) => {
   );
 };
 
+const WeatherForcast: React.FC<{ data: DataInterface }> = ({ data }) => {
+  return (
+    <div className="absolute bottom-0 w-full">
+      <div className="flex">
+        {data.map((day) => (
+          <div className="flex-grow flex flex-col items-center pb-5">
+            <p className="text-3xl">{day.day}</p>
+            <p className="leading-none text-2xl">
+              <span className="text-xl">{getIcon(day.icon, true)}</span>
+              {Math.ceil(day.max)}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const WeatherWeek: React.FC<WeatherWeekProps> = ({ daily }) => {
   const data: DataInterface = weeklyData(daily);
 
   return (
     <div className="w-full h-full flex items-end">
       <WeatherGraph data={data} />
+      <WeatherForcast data={data} />
     </div>
   );
 };

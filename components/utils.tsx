@@ -33,23 +33,9 @@ export const getWeekDay = (day: number) => {
 };
 
 // https://stackoverflow.com/a/39466341/10925497
-const ordinal = (n: number) =>
+export const getOrdinal = (n: number) =>
   [, "st", "nd", "rd"][(n % 100 >> 3) ^ 1 && n % 10] || "th";
 
-export const getDateTime = (unixSeconds: number) => {
-  const today: Date = new Date(unixSeconds * 1000);
-  const hours: number = today.getHours() % 12;
-  const minutes: string | number =
-    today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
-  const ampm = today.getHours() >= 12 ? "pm" : "am";
-  return {
-    time: `${hours ? hours : 12}:${minutes}`,
-    period: ampm,
-    day: `${getWeekDay(today.getDay())} the ${today.getDate()}${ordinal(
-      today.getDate()
-    )}`,
-  };
-};
 
 export const getIcon = (conditionCode: string, inline: boolean) => {
   switch (conditionCode) {
