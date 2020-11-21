@@ -19,15 +19,17 @@ interface WeatherWeekProps {
   daily: Array<WeatherDayProps>;
 }
 
-interface DataInterface {
+interface DataInterfaceItem {
   day: string;
   max: number;
   min: number;
   icon: string;
 }
 
+interface DataInterface extends Array<DataInterfaceItem> {}
+
 const weeklyData = (daily) => {
-  const data: Array<DataInterface> = [];
+  const data: DataInterface = [];
   daily.map((day) => {
     const weekDay: string = getDateTime(day.dt).day.substr(0, 3);
 
@@ -44,30 +46,36 @@ const weeklyData = (daily) => {
   return data;
 };
 
+const WeatherGraph: React.FC<{ data: DataInterface }> = ({ data }) => {
+  return (
+    <ResponsiveContainer width="100%" height="80%">
+      <AreaChart data={data} margin={{ left: 0, bottom: 0 }}>
+        <Area
+          type="monotone"
+          dataKey="max"
+          stroke="#fcb404"
+          strokeWidth={5}
+          fill="#fccd62"
+        />
+
+        <Area
+          type="monotone"
+          dataKey="min"
+          stroke="#fcb404"
+          strokeWidth={5}
+          fill="#fccd62"
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+};
+
 const WeatherWeek: React.FC<WeatherWeekProps> = ({ daily }) => {
-  const data: Array<DataInterface> = weeklyData(daily);
+  const data: DataInterface = weeklyData(daily);
 
   return (
     <div className="w-full h-full flex items-end">
-      <ResponsiveContainer width="100%" height="80%">
-        <AreaChart data={data} margin={{ left: 0, bottom: 0 }}>
-          <Area
-            type="monotone"
-            dataKey="max"
-            stroke="#fcb404"
-            strokeWidth={5}
-            fill="#fccd62"
-          />
-
-          <Area
-            type="monotone"
-            dataKey="min"
-            stroke="#fcb404"
-            strokeWidth={5}
-            fill="#fccd62"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+      <WeatherGraph data={data} />
     </div>
   );
 };

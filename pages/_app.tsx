@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 // Styles
 import "../styles/tailwind.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
     </>
   );
-}
+};
 
 // Only uncomment this method if you have blocking data requirements for
 // every single page in your application. This disables the ability to

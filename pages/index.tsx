@@ -11,7 +11,7 @@ import { requestWakeLock, releaseWakeLock } from "@components/utils";
 import { BsArrowsAngleExpand, BsArrowsAngleContract } from "react-icons/bs";
 
 const FullScreen: React.FC<{}> = () => {
-  const [fullscreen, setFullscreen] = useState(false);
+  const [fullscreen, setFullscreen] = useState<boolean | null>(false);
 
   const handleFullscreen = (event) => {
     event.preventDefault();
@@ -35,7 +35,7 @@ const FullScreen: React.FC<{}> = () => {
   );
 };
 
-function Index({ Component, pageProps }: AppProps) {
+const Index: React.FC<{}> = ({}) => {
   const { data, error } = useSWR("/api/fetchWeather", {
     refreshInterval: 60000,
   });
@@ -58,6 +58,6 @@ function Index({ Component, pageProps }: AppProps) {
       )}
     </>
   );
-}
+};
 
 export default Index;
