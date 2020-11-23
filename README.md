@@ -1,3 +1,10 @@
+# Weather Dash
+Turns an old tablet into a current/forecast weather dashboard. Fetches weather information from [OpenWeather](https://openweathermap.org/).
+
+Clone repo, and update `.env.local` with required API key and lat/long values.
+
+***
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
