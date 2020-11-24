@@ -37,7 +37,7 @@ const FullScreen: React.FC<{}> = () => {
 
 const Index: React.FC<{}> = ({}) => {
   const { data, error } = useSWR("/api/fetchWeather", {
-    refreshInterval: 1000 * 60 * 60, // 1 hour refresh
+    refreshInterval: 300000, // Every 5 Minutes
   });
 
   if (error) return <div>Unable to retrieve weather info</div>;
