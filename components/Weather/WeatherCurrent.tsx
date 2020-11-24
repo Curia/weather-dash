@@ -18,7 +18,7 @@ interface CurrentConditionsProps {
 
 const DateTime: React.FC<{}> = ({}) => {
   const { data, error } = useSWR("/api/fetchTime", {
-    refreshInterval: 5000,
+    refreshInterval: 30000,
   });
   if (error) return <div>Unable to retrieve time info</div>;
   return (
@@ -42,6 +42,7 @@ const DateTime: React.FC<{}> = ({}) => {
 
 const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
   const weather: WeatherProps = current.weather[0];
+
   return (
     <div className="w-full p-4">
       <div className="flex justify-end">
