@@ -14,6 +14,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
           rel="stylesheet"
         />
+        <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
       </Head>
       <Component {...pageProps} />
     </>

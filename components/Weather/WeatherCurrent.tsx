@@ -4,7 +4,7 @@ import useSWR from "swr";
 interface geolocationInterface {
   lat: number;
   long: number;
-  error?: string;
+  error?: string | GeolocationPositionError;
 }
 
 const WeatherCurrent: React.FC = () => {
@@ -16,13 +16,17 @@ const WeatherCurrent: React.FC = () => {
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position)
         setGeolocation({
           lat: position.coords.latitude,
           long: position.coords.longitude,
         });
+      }, (error) => {
+        console.log(error)
+        setGeolocation({
+          ...geolocation,
+          error: error,
+        });
       });
-      console.log(geolocation);
     } else {
       setGeolocation({
         ...geolocation,
