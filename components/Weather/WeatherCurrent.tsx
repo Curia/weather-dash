@@ -1,68 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import { getIcon, getOrdinal } from "@components/utils";
 
-interface WeatherProps {
-  id: boolean;
-  main: string;
-  description: string;
-  icon: string;
+interface geolocationInterface {
+  lat: number;
+  long: number;
+  error?: string;
 }
 
-interface CurrentConditionsProps {
-  current: {
-    temp: number;
-    weather: Array<WeatherProps>;
-  };
-}
-
-const DateTime: React.FC<{}> = ({}) => {
-  const { data, error } = useSWR("/api/fetchTime", {
-    refreshInterval: 30000,
+const WeatherCurrent: React.FC = () => {
+  const [geolocation, setGeolocation] = useState<geolocationInterface>({
+    lat: 0,
+    long: 0,
   });
-  if (error) return <div>Unable to retrieve time info</div>;
-  return (
-    <>
-      {!data ? (
-        <p>Loading</p>
-      ) : (
-        <>
-          <p className="leading-none text-9xl">
-            {data.timeFormatted}
-            <span className="text-6xl">{data.ampm}</span>
-          </p>
-          <p className="leading-none text-4xl mt-4">
-            {`${data.day}  the ${data.date}${getOrdinal(data.date)}`}
-          </p>
-        </>
-      )}
-    </>
-  );
-};
 
-const WeatherCurrent: React.FC<CurrentConditionsProps> = ({ current }) => {
-  const weather: WeatherProps = current.weather[0];
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position)
+        setGeolocation({
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+        });
+      });
+      console.log(geolocation);
+    } else {
+      setGeolocation({
+        ...geolocation,
+        error: "No geolocation avaliable",
+      });
+    }
+  }, []);
 
-  return (
-    <div className="w-full p-4">
-      <div className="flex justify-end">
-        <div className="w-1/2">
-          <DateTime />
-        </div>
-        <div className="w-1/2 text-right">
-          <p className="leading-none text-9xl">
-            <span className="text-6xl">
-              {getIcon(current.weather[0].icon, true)}
-            </span>
-            {Math.ceil(current.temp)}
-          </p>
-          <p className="leading-none text-4xl mt-4">
-            {weather.description[0].toUpperCase() +
-              weather.description.slice(1)}
-          </p>
-        </div>
-      </div>
+  return !geolocation.error ? (
+    <div className="text-white h-full justify-end  flex flex-col">
+      <p className="text-7xl">{geolocation.lat}</p>
+      <p className="text-4xl">{geolocation.long}</p>
     </div>
+  ) : (
+    <p>No geolocation, sorry.</p>
   );
 };
 

@@ -19,23 +19,6 @@ import {
   WiAlien,
 } from "react-icons/wi";
 
-export const getWeekDay = (day: number) => {
-  const weekday: Array<string> = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  return weekday[day];
-};
-
-// https://stackoverflow.com/a/39466341/10925497
-export const getOrdinal = (n: number) =>
-  [, "st", "nd", "rd"][(n % 100 >> 3) ^ 1 && n % 10] || "th";
-
 
 export const getIcon = (conditionCode: string, inline: boolean) => {
   switch (conditionCode) {

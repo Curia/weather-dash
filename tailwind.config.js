@@ -9,9 +9,6 @@ module.exports = {
       fontFamily: {
         sans: ["Open Sans", "sans-serif"],
       },
-      backgroundColor: {
-        background: "#f2f2f2",
-      },
       textColor: {
         'primary': '#333434',
       },
@@ -22,6 +19,9 @@ module.exports = {
         "8xl": "6rem",
         "9xl": "8rem",
       },
+      zIndex: {
+        '-1': '-1',
+       }
     },
   },
   variants: {},
