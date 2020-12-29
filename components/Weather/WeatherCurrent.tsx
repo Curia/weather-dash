@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
+// Components
+import SearchLocation from "@components/Location/SearchLocation";
+
 interface geolocationInterface {
   lat: number;
   long: number;
   error?: string | GeolocationPositionError;
   isSet: boolean;
+  isSearch: boolean;
 }
 
 const WeatherCurrent: React.FC = () => {
@@ -13,6 +17,7 @@ const WeatherCurrent: React.FC = () => {
     lat: 0,
     long: 0,
     isSet: false,
+    isSearch: false,
   });
 
   const setLocation = () => {
@@ -20,6 +25,7 @@ const WeatherCurrent: React.FC = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setGeolocation({
+            ...geolocation,
             lat: position.coords.latitude,
             long: position.coords.longitude,
             isSet: true,
@@ -42,8 +48,6 @@ const WeatherCurrent: React.FC = () => {
     }
   };
 
-  useEffect(() => {}, []);
-
   return (
     <div className="text-white h-full justify-end flex flex-col">
       {!geolocation.isSet ? (
@@ -54,9 +58,18 @@ const WeatherCurrent: React.FC = () => {
           >
             Request Location
           </button>
-          <button className="ml-3 p-1 bg-blue-400 rounded">
+          <button
+            className="ml-3 p-1 bg-blue-400 rounded"
+            onClick={() => setGeolocation({ ...geolocation, isSearch: true })}
+          >
             Search Location
           </button>
+          {geolocation.isSearch ? (
+            <SearchLocation
+              geolocation={geolocation}
+              setGeolocation={setGeolocation}
+            />
+          ) : null}
         </div>
       ) : (
         <>
